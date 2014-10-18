@@ -1,0 +1,173 @@
+b"""""""""""""""""""" Vundle
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/ListToggle'
+Bundle 'scrooloose/syntastic'
+Bundle 'mru.vim'  
+Bundle 'a.vim'
+Bundle 'Tagbar'
+Bundle 'EasyMotion'
+Bundle 'The-NERD-tree' 
+Bundle 'The-NERD-Commenter'
+Bundle 'Color-Scheme-Explorer'
+Bundle 'UltiSnips'
+
+filetype plugin indent on
+""""""""""""""""""""" Vundle
+set encoding=utf-8
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+set fileencodings=utf-8,ucs-bom,chinese
+imap jj <Esc>
+
+"在高亮搜索之后按,h取消高亮
+map <leader>h :noh<cr>
+
+
+"设置行号
+set nu
+ 
+"语言设置
+set langmenu=zh_CN.UTF-8
+ 
+"设置语法高亮
+syntax enable
+syntax on
+ 
+"设置配色方案
+colorscheme desert
+
+ 
+"可以在buffer的任何地方使用鼠标
+set mouse=a
+set selection=exclusive
+set selectmode=mouse,key
+ 
+"高亮显示匹配的括号
+set showmatch
+ 
+"去掉vi一致性
+set nocompatible
+ 
+"设置缩进
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set cindent
+if &term=="xterm"
+    set t_Co=8
+    set t_Sb=^[[4%dm
+    set t_Sf=^[[3%dm
+endif
+ 
+"打开文件类型自动检测功能
+filetype on
+ 
+"设置默认shell
+set shell=bash
+ 
+"设置VIM记录的历史数
+set history=400
+ 
+"设置当文件被外部改变的时侯自动读入文件
+if exists("&autoread")
+    set autoread
+endif
+ 
+"设置ambiwidth
+set ambiwidth=double
+ 
+" 我的状态行显示的内容（包括文件类型和解码） 
+"set statusline=%F%m%r%h%w\ \[%{&ff}-%Y]\ \[ASCII=%b\ -\ HEX=0x%02.2B]\ \[%{strftime(\"%m\.%d\ -\ %H:%M\")}]\ \ \[POS=%l,%v\ -\ %p%%]
+set statusline=%F%m%r%h%w\ \[%{&ff}-%Y]\ \ \[%{strftime(\"%m\.%d\ -\ %H:%M\")}]\ \ \[POS=%l,%v\ -\ %p%%]
+" 总是显示状态行  
+set laststatus=2 
+
+"设置文件类型
+set ffs=unix,dos,mac
+ 
+"设置增量搜索模式
+set incsearch
+ 
+"设置静音模式
+set noerrorbells
+set novisualbell
+set t_vb=
+ 
+"不要备份文件
+set nobackup
+set nowb
+"
+"nmap <silent> <leader>m :nohlsearch<CR>
+
+"括号引号自动补全
+inoremap ( ()<ESC>i
+inoremap ) <c-r>=ClosePair(')')<CR>
+:inoremap { {<CR>}<ESC>O
+:inoremap } <c-r>=ClosePair('}')<CR>
+:inoremap [ []<ESC>i
+:inoremap ] <c-r>=ClosePair(']')<CR>
+:inoremap " ""<ESC>i
+:inoremap ' ''<ESC>i
+
+function! ClosePair(char)
+ if getline('.')[col('.') - 1] == a:char
+     return "\<Right>"
+ else
+     return a:char
+ endif
+endfunction
+
+"去除补全上面的小窗口
+set completeopt=menuone,longest
+
+"设置leader键为，
+let mapleader=","
+
+
+"<F5>映射为切换窗口 
+map <F5> <esc><C-W><C-W>
+imap <F5> <esc><C-W><C-W>
+
+"a.vim插件
+" switch between .h and .c
+" F12 可在头文件和源文件切换
+nnoremap <silent> <F12> :AV<CR>
+inoremap <silent> <F12> <esc>:AV<CR>
+
+
+
+"mru配置
+nmap <cr> :MRU<cr>
+
+"tagbar配置
+nmap <Leader>tb :TagbarToggle<CR>
+let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_width=30
+"let g:tagbar_left=1
+autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+
+"easymotion配置
+let g:EasyMotion_leader_key = '<Space>'
+
+" YouCompleteMe配置
+"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+" "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+" "Do not ask when starting vim
+let g:ycm_confirm_extra_conf = 0
+let g:syntastic_always_populate_loc_list = 1
+
+
+" Ultisnips配置
+"let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<c-k>"
+let g:UltiSnipsJumpBackwardTrigger="<c-j>" 
