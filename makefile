@@ -1,5 +1,5 @@
 
-CURDIR=~/mydofiles
+CURDIR=~/hh_dotfiles
 LNSOPT=-s
 
 ifdef force
@@ -13,6 +13,6 @@ git:
 	ln $(LNSOPT) $(CURDIR)/git_conf/gitconfig ~/.gitconfig
 
 awesome:
-	ln $(LNSOPT) $(CURDIR)/awesome_conf ~/.config/awesome
+	ln -n $(LNSOPT) $(CURDIR)/awesome_conf ~/.config/awesome
 
 
