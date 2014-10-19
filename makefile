@@ -1,5 +1,5 @@
 
-CURDIR=~/confback
+CURDIR=~/mydofiles
 LNSOPT=-s
 
 ifdef force
