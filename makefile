@@ -7,8 +7,16 @@ ifdef force
 	LNSOPT=-fs
 endif
 
-vim:
+submodule:
+	git submodule update --init
+
+vim: submodule
+	cd vim/vundle ; git checkout master ; git pull;
+	mkdir -p ~/.vim/bundle/
 	ln $(LNSOPT) $(CURDIR)/vim/vimrc ~/.vimrc
+	ln -n $(LNSOPT) $(CURDIR)/vim/vundle ~/.vim/bundle/vundle
+	ln -n $(LNSOPT) $(CURDIR)/vim/colors ~/.vim/colors
+	vim -c "BundleInstall"
 
 git:
 	ln $(LNSOPT) $(CURDIR)/git/gitconfig ~/.gitconfig
