@@ -41,7 +41,7 @@ beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
-editor = os.getenv("EDITOR") or "editor"
+editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -74,7 +74,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "  vim  ", "  fireox  ", "  irc  ", "  email  ", " trash " }, s, layouts[1])
+    tags[s] = awful.tag({ "  vim  ", "  fireox  ", "  irc  ", "  email  ", "  terminal  ", " trash " }, s, layouts[1])
 end
 -- }}}
 
@@ -375,3 +375,23 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+
+
+--Autorun programs
+autorun = false
+autorunApps = 
+{
+	terminal .. " -e " .. "vim", 
+	"firefox", 
+	terminal .. " -e " .. "irssi", 
+	"", 
+	"", 
+	terminal .. " -e " .. "wicd-client&", 
+}
+
+if autorun then
+	for app = 1, #autorunApps do
+		awful.util.spawn_with_shell(autorunApps[app])
+	end
+end
