@@ -1,3 +1,4 @@
+.PHONY : vim git awesome
 
 CURDIR=~/hh_dotfiles
 LNSOPT=-s
@@ -7,12 +8,12 @@ ifdef force
 endif
 
 vim:
-	ln $(LNSOPT) $(CURDIR)/vim_conf/vimrc ~/.vimrc
+	ln $(LNSOPT) $(CURDIR)/vim/vimrc ~/.vimrc
 
 git:
-	ln $(LNSOPT) $(CURDIR)/git_conf/gitconfig ~/.gitconfig
+	ln $(LNSOPT) $(CURDIR)/git/gitconfig ~/.gitconfig
 
 awesome:
-	ln -n $(LNSOPT) $(CURDIR)/awesome_conf ~/.config/awesome
+	ln -n $(LNSOPT) $(CURDIR)/awesome ~/.config/awesome
 
 
