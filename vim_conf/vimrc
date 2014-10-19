@@ -1,5 +1,6 @@
-b"""""""""""""""""""" Vundle
-set nocompatible
+
+
+"--------------------------- Vundle BEGIN--------------------------------------
 filetype off
 
 set rtp+=~/.vim/bundle/vundle
@@ -19,15 +20,24 @@ Bundle 'Color-Scheme-Explorer'
 Bundle 'UltiSnips'
 
 filetype plugin indent on
-""""""""""""""""""""" Vundle
+"--------------------------- Vundle END--------------------------------------
+
+
+"--------------------------- CODE BEGIN--------------------------------------
 set encoding=utf-8
 set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 set fileencodings=utf-8,ucs-bom,chinese
-imap jj <Esc>
+"--------------------------- CODE END--------------------------------------
 
-"在高亮搜索之后按,h取消高亮
-map <leader>h :noh<cr>
 
+"--------------------------- BASIC SETING BEGIN--------------------------------------
+
+"自动切换当前目录为当前文件所在目录
+set autochdir
+
+set foldenable
+set foldmethod=manual
+set foldlevel=3
 
 "设置行号
 set nu
@@ -60,11 +70,12 @@ set softtabstop=4
 set shiftwidth=4
 set autoindent
 set cindent
-if &term=="xterm"
-    set t_Co=8
-    set t_Sb=^[[4%dm
-    set t_Sf=^[[3%dm
-endif
+set t_Co=256
+"if &term=="xterm"
+    "set t_Co=8
+    "set t_Sb=^[[4%dm
+    "set t_Sf=^[[3%dm
+"endif
  
 "打开文件类型自动检测功能
 filetype on
@@ -76,9 +87,7 @@ set shell=bash
 set history=400
  
 "设置当文件被外部改变的时侯自动读入文件
-if exists("&autoread")
-    set autoread
-endif
+set autoread
  
 "设置ambiwidth
 set ambiwidth=double
@@ -94,7 +103,10 @@ set ffs=unix,dos,mac
  
 "设置增量搜索模式
 set incsearch
- 
+
+"关闭启动时的救助贫困儿童的提示消息
+set nocompatible
+
 "设置静音模式
 set noerrorbells
 set novisualbell
@@ -104,7 +116,20 @@ set t_vb=
 set nobackup
 set nowb
 "
-"nmap <silent> <leader>m :nohlsearch<CR>
+"nmap <silent> <leader>h :nohlsearch<CR>
+
+"去除补全上面的小窗口
+set completeopt=menuone,longest
+
+"设置leader键为，
+let mapleader=","
+
+"--------------------------- BASIC SETING END--------------------------------------
+
+
+
+
+"--------------------------- MAP START--------------------------------------
 
 "括号引号自动补全
 inoremap ( ()<ESC>i
@@ -124,17 +149,18 @@ function! ClosePair(char)
  endif
 endfunction
 
-"去除补全上面的小窗口
-set completeopt=menuone,longest
-
-"设置leader键为，
-let mapleader=","
-
-
 "<F5>映射为切换窗口 
 map <F5> <esc><C-W><C-W>
 imap <F5> <esc><C-W><C-W>
 
+imap jj <Esc>
+
+"在高亮搜索之后按,h取消高亮
+map <leader>h :noh<cr>
+"--------------------------- MAP END--------------------------------------
+
+
+"--------------------------- PLUGIN START--------------------------------------
 "a.vim插件
 " switch between .h and .c
 " F12 可在头文件和源文件切换
@@ -171,3 +197,5 @@ let g:syntastic_always_populate_loc_list = 1
 let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>" 
+
+"--------------------------- PLUGIN END--------------------------------------
