@@ -1,11 +1,11 @@
 .PHONY : vim git awesome
 
 CURDIR=~/hh_dotfiles
-LNSOPT=-s
+#LNSOPT=-s
 
-ifdef force
+#ifdef force
 	LNSOPT=-fs
-endif
+#endif
 
 submodule:
 	git submodule update --init

@@ -18,6 +18,12 @@ Bundle 'The-NERD-tree'
 Bundle 'The-NERD-Commenter'
 Bundle 'Color-Scheme-Explorer'
 Bundle 'UltiSnips'
+" Track the engine.
+"Bundle  'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Bundle  'honza/vim-snippets'
+"Bundle 'nathanaelkane/vim-indent-guides'
 
 filetype plugin indent on
 "--------------------------- Vundle END--------------------------------------
@@ -41,6 +47,7 @@ set foldlevel=3
 
 "设置行号
 set nu
+"set cursorline
  
 "语言设置
 set langmenu=zh_CN.UTF-8
@@ -65,6 +72,7 @@ set showmatch
 set nocompatible
  
 "设置缩进
+set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -121,10 +129,14 @@ set nowb
 "去除补全上面的小窗口
 set completeopt=menuone,longest
 
-"设置leader键为，
-let mapleader=","
-
-"--------------------------- BASIC SETING END--------------------------------------
+"设置leader键
+let mapleader=";"
+" 基于缩进或语法进行代码折叠
+set foldmethod=indent
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+"-------------------------- BASIC SETING END--------------------------------------
 
 
 
@@ -150,10 +162,36 @@ function! ClosePair(char)
 endfunction
 
 "<F5>映射为切换窗口 
-map <F5> <esc><C-W><C-W>
-imap <F5> <esc><C-W><C-W>
-
-imap jj <Esc>
+"map <F5> <esc><C-W><C-W>
+"imap <F5> <esc><C-W><C-W>
+" 定义快捷键到行首和行尾
+nmap lb 0
+nmap le $
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <Leader>p "+p
+" 定义快捷键关闭当前分割窗口
+"nmap <Leader>q :q<CR>
+" 定义快捷键保存当前窗口内容
+"nmap <Leader>w :w<CR>
+" 定义快捷键保存所有窗口内容并退出 vim
+"nmap <Leader>WQ :wa<CR>:q<CR>
+"不做任何保存，直接退出 vim
+"nmap <Leader>Q :qa!<CR>
+" 依次遍历子窗口
+nnoremap nw <C-W><C-W>
+" 跳转至右方的窗口
+nnoremap <Leader>lw <C-W>l
+" 跳转至方的窗口
+nnoremap <Leader>hw <C-W>h
+" 跳转至上方的子窗口
+nnoremap <Leader>kw <C-W>k
+" 跳转至下方的子窗口
+nnoremap <Leader>jw <C-W>j
+" 定义快捷键在结对符之间跳转，助记pair
+ nmap <Leader>pa %
+ imap <leader>j <Esc>
 
 "在高亮搜索之后按,h取消高亮
 map <leader>h :noh<cr>
@@ -170,7 +208,7 @@ inoremap <silent> <F12> <esc>:AV<CR>
 
 
 "mru配置
-nmap <cr> :MRU<cr>
+nmap <leader>rf :MRU<cr>
 
 "tagbar配置
 nmap <Leader>tb :TagbarToggle<CR>
@@ -180,22 +218,59 @@ let g:tagbar_width=30
 autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
 
 "easymotion配置
-let g:EasyMotion_leader_key = '<Space>'
+"let g:EasyMotion_leader_key = '<Space>'
+let g:EasyMotion_leader_key = '<leader>'
+
+
+"vim-indent-guides配置
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=1
+" 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" 色块宽度
+let g:indent_guides_guide_size=1
+" 快捷键 i 开/关缩进可视化
+nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 " YouCompleteMe配置
 "nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 " "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
-" "Do not ask when starting vim
+"" "Do not ask when starting vim
 let g:ycm_confirm_extra_conf = 0
 let g:syntastic_always_populate_loc_list = 1
 
+" YCM 补全菜单配色
+" 菜单
+"highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+" 选中项
+"highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+" 开启 YCM 标签补全引擎
+"let g:ycm_collect_identifiers_from_tags_files=1
+" 引入 C++ 标准库tags
+"set tags+=/data/misc/software/misc./vim/stdcpp.tags
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+"inoremap <leader>; <C-x><C-o>
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+"set completeopt-=preview
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=2
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 语法关键字补全         
+"let g:ycm_seed_identifiers_with_syntax=1
+
 
 " Ultisnips配置
-"let g:UltiSnipsExpandTrigger="<c-tab>"
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-k>"
-let g:UltiSnipsJumpBackwardTrigger="<c-j>" 
+Plugin 'SirVer/ultisnips'
+"let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
 "--------------------------- PLUGIN END--------------------------------------
